@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventless", "Eventless\Eventless.csproj", "{A9F75373-2DB3-4D0C-A268-E272CBECF02C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventless.Tests", "Eventless.Tests\Eventless.Tests.csproj", "{B25A31E2-29EE-4BDB-8B11-4AD3E5B26B19}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A9F75373-2DB3-4D0C-A268-E272CBECF02C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9F75373-2DB3-4D0C-A268-E272CBECF02C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9F75373-2DB3-4D0C-A268-E272CBECF02C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9F75373-2DB3-4D0C-A268-E272CBECF02C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B25A31E2-29EE-4BDB-8B11-4AD3E5B26B19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B25A31E2-29EE-4BDB-8B11-4AD3E5B26B19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B25A31E2-29EE-4BDB-8B11-4AD3E5B26B19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B25A31E2-29EE-4BDB-8B11-4AD3E5B26B19}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
