@@ -25,7 +25,6 @@ namespace Eventless
             var newVal = _compute();
             Computed.Listeners.Pop();
             Impl.Value = newVal;
-            newSubscriptions.Remove(this);
             newSubscriptions.Remove(Impl);
 
             foreach (var sub in _subscriptions.Where(s => !newSubscriptions.Contains(s)))

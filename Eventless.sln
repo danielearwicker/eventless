@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventless", "Eventless\Even
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventless.Tests", "Eventless.Tests\Eventless.Tests.csproj", "{B25A31E2-29EE-4BDB-8B11-4AD3E5B26B19}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventless.WinForms", "Eventless.WinForms\Eventless.WinForms.csproj", "{6DCEB0CA-B5AA-45B6-A37B-10E846A465E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteTaker", "NoteTaker\NoteTaker.csproj", "{C23E7DE0-6163-4D2D-A4C7-46AA5217F0A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +23,14 @@ Global
 		{B25A31E2-29EE-4BDB-8B11-4AD3E5B26B19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B25A31E2-29EE-4BDB-8B11-4AD3E5B26B19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B25A31E2-29EE-4BDB-8B11-4AD3E5B26B19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DCEB0CA-B5AA-45B6-A37B-10E846A465E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DCEB0CA-B5AA-45B6-A37B-10E846A465E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DCEB0CA-B5AA-45B6-A37B-10E846A465E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DCEB0CA-B5AA-45B6-A37B-10E846A465E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C23E7DE0-6163-4D2D-A4C7-46AA5217F0A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C23E7DE0-6163-4D2D-A4C7-46AA5217F0A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C23E7DE0-6163-4D2D-A4C7-46AA5217F0A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C23E7DE0-6163-4D2D-A4C7-46AA5217F0A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
