@@ -60,6 +60,23 @@ namespace Eventless.WinForms
             Binding.Log.Notify(() => textBox.TextChanged -= handler);
         }
 
+        public static void BindFocus(this Control control, ISetable<bool> to)
+        {
+            BindChanged(to, () =>
+                {
+                    if (to.Value)
+                        control.Focus();
+                });
+
+            EventHandler gotFocus = (sender, args) => to.Value = true;
+            control.GotFocus += gotFocus;
+            Binding.Log.Notify(() => control.GotFocus -= gotFocus);
+
+            EventHandler lostFocus = (sender, args) => to.Value = false;
+            control.LostFocus += lostFocus;
+            Binding.Log.Notify(() => control.LostFocus -= lostFocus);
+        }
+
         public static void BindText(this ButtonBase textBox, IGetable<string> to)
         {
             BindChanged(to, () => textBox.Text = to.Value);
@@ -132,8 +149,8 @@ namespace Eventless.WinForms
                 unbindAction.Action();
         }
 
-        private static void RebindItems<TItem, TControl>(Control panel, IList<TItem> to, int start)
-            where TControl : Control, IBindsTo<TItem>, new()
+        private static void RebindItems<TItem, TControl>(Control panel, IList<TItem> to, int start, Func<TControl> factory)
+            where TControl : Control, IBindsTo<TItem>
         {
             // If we have too many controls, remove from the end
             while (panel.Controls.Count > to.Count)
@@ -147,7 +164,7 @@ namespace Eventless.WinForms
             // If too few, add to the end
             while (panel.Controls.Count < to.Count)
             {
-                var ctrl = new TControl();
+                var ctrl = factory();
                 var last = panel.Controls.Count - 1;
                 if (last >= 0)
                     ctrl.Top = panel.Controls[last].Bottom;
@@ -167,37 +184,47 @@ namespace Eventless.WinForms
         {
             private readonly Panel _panel;
             private readonly ISetableList<TItem> _to;
+            private readonly Action _added;
 
-            internal ForEachBinder(ISetableList<TItem> to, Panel panel)
+            internal ForEachBinder(ISetableList<TItem> to, Panel panel, Action added = null)
             {
                 _to = to;
                 _panel = panel;
+                _added = added;
             }
 
             public void As<TControl>()
                 where TControl : Control, IBindsTo<TItem>, new()
             {
+                As(() => new TControl());
+            }
+
+            public void As<TControl>(Func<TControl> factory)
+                where TControl : Control, IBindsTo<TItem>
+            {
                 _panel.AutoScroll = true;
                 _panel.Controls.Clear();
-                RebindItems<TItem, TControl>(_panel, _to, 0);
+                RebindItems(_panel, _to, 0, factory);
 
                 var throttledResize = Throttle(100, () =>
                 {
                     foreach (var control in _panel.Controls.OfType<Control>())
-                        control.Width = _panel.ClientSize.Width - 1;
+                        control.Width = _panel.ClientSize.Width;
                 });
 
                 EventHandler onResize = (s, ev) => throttledResize();
 
                 _to.Added += index =>
                 {
-                    RebindItems<TItem, TControl>(_panel, _to, index);
+                    RebindItems(_panel, _to, index, factory);
                     onResize(null, null);
+                    if (_added != null)
+                        _added();
                 };
                 _to.Updated += index => _panel.Controls[index].CaptureUnbind(
                     () => ((TControl)_panel.Controls[index]).Bind(_to[index]));
-                _to.Removed += index => RebindItems<TItem, TControl>(_panel, _to, index);
-                _to.Cleared += () => RebindItems<TItem, TControl>(_panel, _to, 0);
+                _to.Removed += index => RebindItems(_panel, _to, index, factory);
+                _to.Cleared += () => RebindItems(_panel, _to, 0, factory);
 
                 onResize(null, null);
                 _panel.Resize += onResize;
@@ -219,6 +246,36 @@ namespace Eventless.WinForms
         public static ForEachBinder<TItem> BindForEach<TItem>(this Panel panel, ISetableList<TItem> to)
         {
             return new ForEachBinder<TItem>(to, panel);
+        }
+
+        public static ForEachBinder<TItem> BindContent<TItem>(this Panel panel, IGetable<TItem> to)
+            where TItem : class
+        {
+            var list = new SetableList<TItem>();
+            Computed.Do(() =>
+                {
+                    if (to.Value != null)
+                    {
+                        if (list.Count == 0)
+                            list.Add(to.Value);
+                        else
+                            list[0] = to.Value;
+                    }
+                    else
+                        list.Clear();
+                });
+
+            var throttledResize = Throttle(100, () =>
+            {
+                if (panel.Controls.Count != 0)
+                    panel.Controls[0].Height = panel.ClientSize.Height;
+            });
+
+            EventHandler onResize = (s, ev) => throttledResize();
+            panel.Resize += onResize;
+            Binding.Log.Notify(() => panel.Resize -= onResize);
+
+            return new ForEachBinder<TItem>(list, panel, throttledResize);
         }
     }
 }
