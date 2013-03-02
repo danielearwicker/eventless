@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Eventless
 {
-    public interface IWriteableList<T> : IReadable<IList<T>>, IList<T>
+    public interface ISetableList<T> : IGetable<IList<T>>, IList<T>
     {
         event Action<int> Added;
         event Action<int> Updated;
@@ -11,7 +11,7 @@ namespace Eventless
         event Action Cleared;
     }
 
-    public static class WriteableListExtensions
+    public static class SetableListExtensions
     {
         public static void RemoveAll<T>(this IList<T> list, IEnumerable<T> remove)
         {

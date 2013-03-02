@@ -2,12 +2,12 @@
 
 namespace Eventless
 {
-    public sealed class Writeable<T> : IWriteable<T>, IEquate<T>
+    public sealed class Setable<T> : ISetable<T>, IEquate<T>
     {
         private T _value;
         private bool _changing;
 
-        public Writeable(T value = default(T))
+        public Setable(T value = default(T))
         {
             _value = value;
             EqualityComparer = DefaultEqualityComparer;
@@ -50,17 +50,17 @@ namespace Eventless
             return ReferenceEquals(a, b) || (!ReferenceEquals(a, null) && a.Equals(b));
         }
 
-        public static implicit operator T(Writeable<T> from)
+        public static implicit operator T(Setable<T> from)
         {
             return from.Value;
         }
     }
 
-    public static class Writeable
+    public static class Setable
     {
-        public static Writeable<T> From<T>(T initVal)
+        public static Setable<T> From<T>(T initVal)
         {
-            return new Writeable<T>(initVal);
+            return new Setable<T>(initVal);
         }
     }
 }

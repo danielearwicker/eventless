@@ -1,6 +1,6 @@
 ﻿namespace Eventless
 {
-    public interface IWriteable<T> : IReadable<T>
+    public interface ISetable<T> : IGetable<T>
     {
         new T Value { get; set; }
     }

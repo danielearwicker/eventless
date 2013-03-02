@@ -2,12 +2,12 @@
 
 namespace Eventless
 {
-    public interface IReadable<out T> : IReadable
+    public interface IGetable<out T> : IGetable
     {
         T Value { get; }
     }
 
-    public interface IReadable
+    public interface IGetable
     {
         event Action Changed;
     }

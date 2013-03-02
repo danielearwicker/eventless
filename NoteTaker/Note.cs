@@ -4,8 +4,7 @@ namespace NoteTaker
 {
     public class Note
     {
-        public readonly Writeable<string> Text = new Writeable<string>();
-        public readonly Writeable<bool> IsSelected = new Writeable<bool>();
-        public readonly Writeable<NotePriority> Priority = new Writeable<NotePriority>();
+        public readonly ISetable<string> Text = new Setable<string>();
+        public readonly ISetable<bool> IsSelected = new Setable<bool>();
     }
 }

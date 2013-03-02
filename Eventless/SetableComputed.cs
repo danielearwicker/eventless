@@ -2,11 +2,11 @@
 
 namespace Eventless
 {
-    public sealed class WriteableComputed<T> : Forwarder<Computed<T>, T>, IWriteable<T>
+    public sealed class SetableComputed<T> : Forwarder<Computed<T>, T>, ISetable<T>
     {
         private readonly Action<T> _set;
 
-        public WriteableComputed(Func<T> get, Action<T> set)
+        public SetableComputed(Func<T> get, Action<T> set)
             : base(new Computed<T>(get))
         {
             _set = set;

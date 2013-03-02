@@ -52,7 +52,7 @@
   <ItemGroup>
     <Compile Include="TestComputed.cs" />
     <Compile Include="TestList.cs" />
-    <Compile Include="TestWriteable.cs" />
+    <Compile Include="TestSetable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

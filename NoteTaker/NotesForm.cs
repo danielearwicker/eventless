@@ -12,7 +12,7 @@ namespace NoteTaker
         {
             InitializeComponent();
 
-            var notes = new WriteableList<Note>
+            var notes = new SetableList<Note>
                 {
                     new Note {Text = {Value = "Hello "}},
                     new Note {Text = {Value = "Goodbye"}},
@@ -33,20 +33,9 @@ namespace NoteTaker
                 };
             
             // For each each note, make a CheckedListBoxItem
-            checkedListBoxNotes.BindForEach(notes, (note, checkBox) =>
-                {
-                    checkBox.BindText(Computed.From(() => 
-                        note.Text.Value + 
-                        " - " + 
-                        Enum.GetName(typeof(NotePriority), note.Priority.Value)));
+            panelSelectionList.BindForEach(notes, (Note note, NoteListItemForm form) => form.Bind(note));
 
-                    checkBox.BindChecked(note.IsSelected);
-                });
-
-            var selectedNoteIndex = Writeable.From(-1);
-            checkedListBoxNotes.BindSelectedIndex(selectedNoteIndex);
-
-            var newNoteText = Writeable.From(string.Empty);
+            var newNoteText = Setable.From(string.Empty);
             textBoxNewNote.BindText(newNoteText);
 
             // Add button only enabled if text box is non-empty
@@ -64,18 +53,16 @@ namespace NoteTaker
             // Two-way binding
             checkBoxAllNotes.BindCheckState(Computed.From(
 
-                // getter: depends on how many of the notes are selected
-                () => selectedNotes.Value.Count == 0
-                        ? CheckState.Unchecked
-                        : selectedNotes.Value.Count == notes.Count
-                            ? CheckState.Checked 
-                            : CheckState.Indeterminate,
-                
-                // setter: broadcasts new state to all notes
-                state =>
+                get: () => selectedNotes.Value.Count == 0
+                               ? CheckState.Unchecked
+                               : selectedNotes.Value.Count == notes.Count
+                                     ? CheckState.Checked
+                                     : CheckState.Indeterminate,
+
+                set: state =>
                     {
                         // only pay attention when setting to a definite state
-                        if (state == CheckState.Indeterminate) 
+                        if (state == CheckState.Indeterminate)
                             return;
 
                         foreach (var note in notes)

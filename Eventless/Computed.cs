@@ -4,14 +4,14 @@ using System.Linq;
 
 namespace Eventless
 {
-    public sealed class Computed<T> : Forwarder<Writeable<T>, T>, IReadable<T>, IDisposable
+    public sealed class Computed<T> : Forwarder<Setable<T>, T>, IGetable<T>, IDisposable
     {
         private readonly Func<T> _compute;
 
-        private ISet<IReadable> _subscriptions = Computed.EmptySubscriptions;
+        private ISet<IGetable> _subscriptions = Computed.EmptySubscriptions;
 
         public Computed(Func<T> compute)
-            : base(new Writeable<T>())
+            : base(new Setable<T>())
         {
             _compute = compute;
             Recompute();
@@ -19,7 +19,7 @@ namespace Eventless
 
         private void Recompute()
         {
-            var newSubscriptions = new HashSet<IReadable>();
+            var newSubscriptions = new HashSet<IGetable>();
 
             Computed.Listeners.Push(o => newSubscriptions.Add(o));
             var newVal = _compute();
@@ -50,8 +50,8 @@ namespace Eventless
 
     public static class Computed
     {
-        internal static readonly ISet<IReadable> EmptySubscriptions = new HashSet<IReadable>();
-        internal static readonly ListenerStack<IReadable> Listeners = new ListenerStack<IReadable>();
+        internal static readonly ISet<IGetable> EmptySubscriptions = new HashSet<IGetable>();
+        internal static readonly ListenerStack<IGetable> Listeners = new ListenerStack<IGetable>();
         
         public static void Do(Action compute)
         {
@@ -67,9 +67,9 @@ namespace Eventless
             return new Computed<T>(compute);
         }
 
-        public static WriteableComputed<T> From<T>(Func<T> get, Action<T> set)
+        public static SetableComputed<T> From<T>(Func<T> get, Action<T> set)
         {
-            return new WriteableComputed<T>(get, set);
+            return new SetableComputed<T>(get, set);
         }
     }
 }

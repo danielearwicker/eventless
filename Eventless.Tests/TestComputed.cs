@@ -8,8 +8,8 @@ namespace Eventless.Tests
         [TestMethod]
         public void TestSimple()
         {
-            var i = Writeable.From(2);
-            var j = Writeable.From(3);
+            var i = Setable.From(2);
+            var j = Setable.From(3);
 
             // Implicit conversion to value seems cool here!
             var sum = Computed.From(() => i + j);
@@ -24,8 +24,8 @@ namespace Eventless.Tests
         [TestMethod]
         public void TestImperative()
         {
-            var i = Writeable.From(2);
-            var j = Writeable.From(3);
+            var i = Setable.From(2);
+            var j = Setable.From(3);
             var sum = Computed.From(() => i + j);
             var doubled = Computed.From(() => sum.Value * 2);
 
@@ -40,7 +40,7 @@ namespace Eventless.Tests
 
             i.Value++;
 
-            // Should have executed 4 times: init and then mutation of i, each time changing two observed readables
+            // Should have executed 4 times: init and then mutation of i, each time changing two observed values
             Assert.AreEqual(4, executionCount);
         }
     }

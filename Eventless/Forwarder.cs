@@ -2,7 +2,7 @@
 
 namespace Eventless
 {
-    public class Forwarder<TImpl, TValue> : IReadable, IEquate<TValue> where TImpl : class, IEquate<TValue>, IReadable
+    public class Forwarder<TImpl, TValue> : IGetable, IEquate<TValue> where TImpl : class, IEquate<TValue>, IGetable
     {
         private readonly TImpl _impl;
 

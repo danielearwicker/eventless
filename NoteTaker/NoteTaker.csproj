@@ -46,13 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Note.cs" />
-    <Compile Include="NotePane.cs">
+    <Compile Include="NoteListItemForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NotePane.Designer.cs">
-      <DependentUpon>NotePane.cs</DependentUpon>
+    <Compile Include="NoteListItemForm.Designer.cs">
+      <DependentUpon>NoteListItemForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="NotePriority.cs" />
     <Compile Include="NotesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -61,8 +60,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="NotePane.resx">
-      <DependentUpon>NotePane.cs</DependentUpon>
+    <EmbeddedResource Include="NoteListItemForm.resx">
+      <DependentUpon>NoteListItemForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NotesForm.resx">
       <DependentUpon>NotesForm.cs</DependentUpon>

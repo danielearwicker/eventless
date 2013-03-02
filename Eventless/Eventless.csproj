@@ -40,17 +40,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Binding.cs" />
-    <Compile Include="IWriteableList.cs" />
+    <Compile Include="ISetableList.cs" />
     <Compile Include="ListenerStack.cs" />
     <Compile Include="RecursiveModificationException.cs" />
-    <Compile Include="WriteableComputed.cs" />
+    <Compile Include="SetableComputed.cs" />
     <Compile Include="Computed.cs" />
     <Compile Include="Forwarder.cs" />
     <Compile Include="IEquate.cs" />
-    <Compile Include="IWriteable.cs" />
-    <Compile Include="IReadable.cs" />
-    <Compile Include="Writeable.cs" />
-    <Compile Include="WriteableList.cs" />
+    <Compile Include="ISetable.cs" />
+    <Compile Include="IGetable.cs" />
+    <Compile Include="Setable.cs" />
+    <Compile Include="SetableList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

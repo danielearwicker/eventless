@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace Eventless
 {
-    public sealed class WriteableList<T> : IWriteableList<T>
+    public sealed class SetableList<T> : ISetableList<T>
     {
         private readonly List<T> _list;
         
-        public WriteableList(IEnumerable<T> init = null)
+        public SetableList(IEnumerable<T> init = null)
         {
-            EqualityComparer = Writeable<T>.DefaultEqualityComparer;
+            EqualityComparer = Setable<T>.DefaultEqualityComparer;
 
             _list = new List<T>();
             if (init != null)

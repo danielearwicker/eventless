@@ -9,7 +9,7 @@ namespace Eventless.Tests
         [TestMethod]
         public void TestSimple()
         {
-            var l = new WriteableList<string>();
+            var l = new SetableList<string>();
 
             var added = new List<int>();
             var removed = new List<int>();
@@ -60,7 +60,7 @@ namespace Eventless.Tests
         [TestMethod]
         public void TestReentrance()
         {
-            var l = new WriteableList<int> {1, 2, 3, 4, 5, 6};
+            var l = new SetableList<int> {1, 2, 3, 4, 5, 6};
 
             // Set it up so that if any item is changed, they all change to 10!
             l.Changed += () =>
@@ -79,7 +79,7 @@ namespace Eventless.Tests
         [ExpectedException(typeof(RecursiveModificationException))]
         public void TestRecursion()
         {
-            var l = new WriteableList<int> { 1, 2, 3, 4, 5, 6 };
+            var l = new SetableList<int> { 1, 2, 3, 4, 5, 6 };
 
             // Same set up (any changes => all change to 10)
             l.Changed += () =>

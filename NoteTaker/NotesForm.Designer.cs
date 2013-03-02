@@ -30,13 +30,13 @@
         {
             this.textBoxNewNote = new System.Windows.Forms.TextBox();
             this.buttonAdd = new System.Windows.Forms.Button();
-            this.checkedListBoxNotes = new System.Windows.Forms.CheckedListBox();
             this.checkBoxAllNotes = new System.Windows.Forms.CheckBox();
             this.buttonDelete = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.panelSelectionList = new System.Windows.Forms.Panel();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -61,18 +61,6 @@
             this.buttonAdd.TabIndex = 1;
             this.buttonAdd.Text = "Add";
             this.buttonAdd.UseVisualStyleBackColor = true;
-            // 
-            // checkedListBoxNotes
-            // 
-            this.checkedListBoxNotes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkedListBoxNotes.FormattingEnabled = true;
-            this.checkedListBoxNotes.IntegralHeight = false;
-            this.checkedListBoxNotes.Location = new System.Drawing.Point(6, 6);
-            this.checkedListBoxNotes.Name = "checkedListBoxNotes";
-            this.checkedListBoxNotes.Size = new System.Drawing.Size(389, 231);
-            this.checkedListBoxNotes.TabIndex = 2;
             // 
             // checkBoxAllNotes
             // 
@@ -108,13 +96,13 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.checkedListBoxNotes);
+            this.tabPage1.Controls.Add(this.panelSelectionList);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(401, 243);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Check list with detail";
+            this.tabPage1.Text = "List of checkboxes";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabControl2
@@ -144,6 +132,16 @@
             this.tabPage3.Text = "Note Taker";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // panelSelectionList
+            // 
+            this.panelSelectionList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelSelectionList.Location = new System.Drawing.Point(6, 6);
+            this.panelSelectionList.Name = "panelSelectionList";
+            this.panelSelectionList.Size = new System.Drawing.Size(389, 234);
+            this.panelSelectionList.TabIndex = 0;
+            // 
             // NotesForm
             // 
             this.AcceptButton = this.buttonAdd;
@@ -167,13 +165,13 @@
 
         private System.Windows.Forms.TextBox textBoxNewNote;
         private System.Windows.Forms.Button buttonAdd;
-        private System.Windows.Forms.CheckedListBox checkedListBoxNotes;
         private System.Windows.Forms.CheckBox checkBoxAllNotes;
         private System.Windows.Forms.Button buttonDelete;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Panel panelSelectionList;
     }
 }
 
