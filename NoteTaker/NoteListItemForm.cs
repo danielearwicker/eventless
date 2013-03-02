@@ -1,9 +1,10 @@
 ﻿using System.Windows.Forms;
+using Eventless;
 using Eventless.WinForms;
 
 namespace NoteTaker
 {
-    public partial class NoteListItemForm : Form
+    public partial class NoteListItemForm : Form, IBindsTo<Note>
     {
         public NoteListItemForm()
         {

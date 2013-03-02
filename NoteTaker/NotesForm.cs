@@ -33,7 +33,7 @@ namespace NoteTaker
                 };
             
             // For each each note, make a CheckedListBoxItem
-            panelSelectionList.BindForEach(notes, (Note note, NoteListItemForm form) => form.Bind(note));
+            panelSelectionList.BindForEach(notes).As<NoteListItemForm>();
 
             var newNoteText = Setable.From(string.Empty);
             textBoxNewNote.BindText(newNoteText);

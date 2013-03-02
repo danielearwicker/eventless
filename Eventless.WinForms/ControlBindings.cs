@@ -7,6 +7,27 @@ namespace Eventless.WinForms
 {
     public static class ControlBindings
     {
+        public static Action Throttle(int milliseconds, Action action)
+        {
+            Timer timer = null;
+
+            return () =>
+            {
+                if (timer != null)
+                    return;
+
+                timer = new Timer { Interval = milliseconds };
+                timer.Tick += (sender, args) =>
+                {
+                    timer.Stop();
+                    timer.Dispose();
+                    timer = null;
+                    action();
+                };
+                timer.Start();
+            };
+        }
+
         public static void BindChanged<T>(IGetable<T> getable, Action changed)
         {
             changed();
@@ -111,9 +132,8 @@ namespace Eventless.WinForms
                 unbindAction.Action();
         }
 
-        private static void RebindItems<TItem, TControl>(Control panel,
-            IList<TItem> to, Action<TItem, TControl> bindItem, int start)
-            where TControl : Control, new()
+        private static void RebindItems<TItem, TControl>(Control panel, IList<TItem> to, int start)
+            where TControl : Control, IBindsTo<TItem>, new()
         {
             // If we have too many controls, remove from the end
             while (panel.Controls.Count > to.Count)
@@ -139,71 +159,66 @@ namespace Eventless.WinForms
             {
                 var item = to[i];
                 var ctrl = (TControl) panel.Controls[i];
-                ctrl.CaptureUnbind(() => bindItem(item, ctrl));
+                ctrl.CaptureUnbind(() => ctrl.Bind(item));
             }
         }
 
-        public static Action Throttle(int milliseconds, Action action)
+        public class ForEachBinder<TItem>
         {
-            Timer timer = null;
+            private readonly Panel _panel;
+            private readonly ISetableList<TItem> _to;
 
-            return () =>
+            internal ForEachBinder(ISetableList<TItem> to, Panel panel)
+            {
+                _to = to;
+                _panel = panel;
+            }
+
+            public void As<TControl>()
+                where TControl : Control, IBindsTo<TItem>, new()
+            {
+                _panel.AutoScroll = true;
+                _panel.Controls.Clear();
+                RebindItems<TItem, TControl>(_panel, _to, 0);
+
+                var throttledResize = Throttle(100, () =>
                 {
-                    if (timer != null)
-                        return;
-
-                    timer = new Timer {Interval = milliseconds};
-                    timer.Tick += (sender, args) =>
-                    {
-                        timer.Stop();
-                        timer.Dispose();
-                        timer = null;
-                        action();
-                    };
-                    timer.Start();
-                };
-        }
-
-        public static void BindForEach<TItem, TControl>(this Panel panel,
-                ISetableList<TItem> to, Action<TItem, TControl> bindItem)
-            where TControl : Control, new()
-        {
-            panel.AutoScroll = true;
-            panel.Controls.Clear();
-            RebindItems(panel, to, bindItem, 0);
-
-            var throttledResize = Throttle(100, () =>
-                {
-                    foreach (var control in panel.Controls.OfType<Control>())
-                        control.Width = panel.ClientSize.Width - 1;
+                    foreach (var control in _panel.Controls.OfType<Control>())
+                        control.Width = _panel.ClientSize.Width - 1;
                 });
 
-            EventHandler onResize = (s, ev) => throttledResize();
+                EventHandler onResize = (s, ev) => throttledResize();
 
-            to.Added += index =>
+                _to.Added += index =>
                 {
-                    RebindItems(panel, to, bindItem, index);
+                    RebindItems<TItem, TControl>(_panel, _to, index);
                     onResize(null, null);
                 };
-            to.Updated += index => panel.Controls[index].CaptureUnbind(
-                () => bindItem(to[index], (TControl)panel.Controls[index]));
-            to.Removed += index => RebindItems(panel, to, bindItem, index);
-            to.Cleared += () => RebindItems(panel, to, bindItem, 0);
-            
-            onResize(null, null);
-            panel.Resize += onResize;
+                _to.Updated += index => _panel.Controls[index].CaptureUnbind(
+                    () => ((TControl)_panel.Controls[index]).Bind(_to[index]));
+                _to.Removed += index => RebindItems<TItem, TControl>(_panel, _to, index);
+                _to.Cleared += () => RebindItems<TItem, TControl>(_panel, _to, 0);
 
-            Binding.Log.Notify(() =>
+                onResize(null, null);
+                _panel.Resize += onResize;
+
+                Binding.Log.Notify(() =>
                 {
-                    panel.Resize -= onResize;
+                    _panel.Resize -= onResize;
 
-                    while (panel.Controls.Count != 0)
+                    while (_panel.Controls.Count != 0)
                     {
-                        var last = panel.Controls.Count - 1;
-                        panel.Controls[last].Unbind();
-                        panel.Controls.RemoveAt(last);
+                        var last = _panel.Controls.Count - 1;
+                        _panel.Controls[last].Unbind();
+                        _panel.Controls.RemoveAt(last);
                     }
                 });
+            }   
+        }
+
+        public static ForEachBinder<TItem> BindForEach<TItem>(this Panel panel, ISetableList<TItem> to)
+        {
+            return new ForEachBinder<TItem>(to, panel);
         }
     }
 }
