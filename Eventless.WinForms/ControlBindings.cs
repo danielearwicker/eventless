@@ -7,30 +7,11 @@ namespace Eventless.WinForms
 {
     public static class ControlBindings
     {
-        private static readonly ListenerStack<Action> BindingLog = new ListenerStack<Action>();
-
-        private static void EmptyAction() { }
-
-        private static Action InBindingContext(Action bindingActivity)
-        {
-            try
-            {
-                Action multicastUnbinders = null;
-                BindingLog.Push(nestedUnbinder => multicastUnbinders += nestedUnbinder);
-                bindingActivity();
-                return multicastUnbinders ?? EmptyAction;
-            }
-            finally 
-            {
-                BindingLog.Pop();
-            }
-        }
-
         public static void BindChanged<T>(IReadable<T> readable, Action changed)
         {
             changed();
             readable.Changed += changed;
-            BindingLog.Notify(() => readable.Changed -= changed);
+            Binding.Log.Notify(() => readable.Changed -= changed);
         }
 
         public static void BindEnabled(this Control control, IReadable<bool> to)
@@ -55,7 +36,7 @@ namespace Eventless.WinForms
 
             EventHandler handler = (sender, args) => to.Value = textBox.Text;
             textBox.TextChanged += handler;
-            BindingLog.Notify(() => textBox.TextChanged -= handler);
+            Binding.Log.Notify(() => textBox.TextChanged -= handler);
         }
 
         public static void BindText(this ButtonBase textBox, IReadable<string> to)
@@ -69,7 +50,7 @@ namespace Eventless.WinForms
 
             EventHandler handler = (sender, args) => to.Value = checkBox.Checked;
             checkBox.CheckedChanged += handler;
-            BindingLog.Notify(() => checkBox.CheckedChanged -= handler);
+            Binding.Log.Notify(() => checkBox.CheckedChanged -= handler);
         }
 
         public static void BindCheckState(this CheckBox checkBox, IWriteable<CheckState> to)
@@ -78,7 +59,7 @@ namespace Eventless.WinForms
 
             EventHandler handler = (sender, args) => to.Value = checkBox.CheckState;
             checkBox.CheckStateChanged += handler;
-            BindingLog.Notify(() => checkBox.CheckStateChanged -= handler);
+            Binding.Log.Notify(() => checkBox.CheckStateChanged -= handler);
         }
 
         public static void BindChecked<TValue>(this RadioButton radioButton, IWriteable<TValue> to, 
@@ -95,7 +76,7 @@ namespace Eventless.WinForms
                         to.Value = value;
                 };
             radioButton.CheckedChanged += handler;
-            BindingLog.Notify(() => radioButton.CheckedChanged -= handler);
+            Binding.Log.Notify(() => radioButton.CheckedChanged -= handler);
         }
 
         public static void BindSelectedIndex(this ListBox listBox, IWriteable<int> to)
@@ -104,7 +85,7 @@ namespace Eventless.WinForms
 
             EventHandler handler = (sender, args) => to.Value = listBox.SelectedIndex;
             listBox.SelectedIndexChanged += handler;
-            BindingLog.Notify(() => listBox.SelectedIndexChanged -= handler);
+            Binding.Log.Notify(() => listBox.SelectedIndexChanged -= handler);
         }
 
         public static void BindForEach<TItem>(this CheckedListBox checkedListBox, 
@@ -156,12 +137,12 @@ namespace Eventless.WinForms
             internal Action Action;
         }
 
-        public static void CaptureUnbinding(this Control control, Action bindItem)
+        public static void CaptureUnbind(this Control control, Action bindItem)
         {
             Unbind(control);
             control.Tag = new UnbindAction
                 {
-                    Action = InBindingContext(bindItem)
+                    Action = Binding.CaptureUnbind(bindItem)
                 };
         }
 
@@ -201,7 +182,7 @@ namespace Eventless.WinForms
             {
                 var item = to[i];
                 var ctrl = (TControl) panel.Controls[i];
-                ctrl.CaptureUnbinding(() => bindItem(item, ctrl));
+                ctrl.CaptureUnbind(() => bindItem(item, ctrl));
             }
         }
 
@@ -214,12 +195,12 @@ namespace Eventless.WinForms
             RebindItems(panel, to, bindItem, 0);
 
             to.Added += index => RebindItems(panel, to, bindItem, index);
-            to.Updated += index => panel.Controls[index].CaptureUnbinding(
+            to.Updated += index => panel.Controls[index].CaptureUnbind(
                 () => bindItem(to[index], (TControl)panel.Controls[index]));
             to.Removed += index => RebindItems(panel, to, bindItem, index);
             to.Cleared += () => RebindItems(panel, to, bindItem, 0);
 
-            BindingLog.Notify(() =>
+            Binding.Log.Notify(() =>
                 {
                     while (panel.Controls.Count != 0)
                     {

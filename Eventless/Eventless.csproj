@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Binding.cs" />
     <Compile Include="IWriteableList.cs" />
     <Compile Include="ListenerStack.cs" />
     <Compile Include="RecursiveModificationException.cs" />
