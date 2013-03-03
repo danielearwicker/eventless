@@ -77,11 +77,10 @@ namespace NoteTaker
             panelEditors.BindForEach(notes.AllNotes).As<NoteEditingForm>();
 
 
-            // Completely unrelated examples...
+            // Completely unrelated example...
             var urlText = Setable.From(string.Empty);
             textBoxUrl.BindText(urlText);
 
-            // Second example: compute a Uri object from the string
             var uri = Computed.From(() =>
             {
                 Uri result;
