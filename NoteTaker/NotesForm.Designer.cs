@@ -43,11 +43,16 @@
             this.buttonHigh = new System.Windows.Forms.Button();
             this.buttonNormal = new System.Windows.Forms.Button();
             this.buttonLow = new System.Windows.Forms.Button();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBoxUrl = new System.Windows.Forms.TextBox();
+            this.textBoxResponse = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxNewNote
@@ -165,6 +170,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl2.Controls.Add(this.tabPage3);
+            this.tabControl2.Controls.Add(this.tabPage4);
             this.tabControl2.Location = new System.Drawing.Point(15, 12);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
@@ -214,6 +220,44 @@
             this.buttonLow.Text = "Low";
             this.buttonLow.UseVisualStyleBackColor = true;
             // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.textBoxResponse);
+            this.tabPage4.Controls.Add(this.textBoxUrl);
+            this.tabPage4.Controls.Add(this.label1);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(599, 405);
+            this.tabPage4.TabIndex = 1;
+            this.tabPage4.Text = "Async";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 21);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(65, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Type a URL";
+            // 
+            // textBoxUrl
+            // 
+            this.textBoxUrl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxUrl.Location = new System.Drawing.Point(84, 18);
+            this.textBoxUrl.Name = "textBoxUrl";
+            this.textBoxUrl.Size = new System.Drawing.Size(497, 20);
+            this.textBoxUrl.TabIndex = 1;
+            // 
+            // textBoxResponse
+            // 
+            this.textBoxResponse.Location = new System.Drawing.Point(84, 44);
+            this.textBoxResponse.Multiline = true;
+            this.textBoxResponse.Name = "textBoxResponse";
+            this.textBoxResponse.Size = new System.Drawing.Size(497, 344);
+            this.textBoxResponse.TabIndex = 2;
+            // 
             // NotesForm
             // 
             this.AcceptButton = this.buttonAdd;
@@ -232,6 +276,8 @@
             this.tabControl2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -253,6 +299,10 @@
         private System.Windows.Forms.Button buttonLow;
         private System.Windows.Forms.Button buttonNormal;
         private System.Windows.Forms.Button buttonHigh;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TextBox textBoxResponse;
+        private System.Windows.Forms.TextBox textBoxUrl;
+        private System.Windows.Forms.Label label1;
     }
 }
 

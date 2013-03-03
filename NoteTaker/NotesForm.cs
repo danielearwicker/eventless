@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net.Http;
 using System.Windows.Forms;
 using Eventless;
 using Eventless.WinForms;
@@ -74,6 +75,36 @@ namespace NoteTaker
             panelActiveNote.BindContent(notes.ActiveNote).As<NoteEditingForm>();
 
             panelEditors.BindForEach(notes.AllNotes).As<NoteEditingForm>();
+
+
+            // Completely unrelated examples...
+            var urlText = Setable.From(string.Empty);
+            textBoxUrl.BindText(urlText);
+
+            // Second example: compute a Uri object from the string
+            var uri = Computed.From(() =>
+            {
+                Uri result;
+                Uri.TryCreate(urlText.Value, UriKind.Absolute, out result);
+                return result;
+            });
+
+            var response = Computed.From(async () =>
+            {
+                if (uri.Value == null)
+                    return "You haven't entered a valid url yet...";
+
+                try
+                {
+                    return await new HttpClient().GetStringAsync(uri.Value);
+                }
+                catch (HttpRequestException x)
+                {
+                    return "Error: " + x.Message;
+                }
+            }).Throttle(1000);
+
+            textBoxResponse.BindText(response);
         }
     }
 }

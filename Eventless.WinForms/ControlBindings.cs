@@ -7,14 +7,19 @@ namespace Eventless.WinForms
 {
     public static class ControlBindings
     {
-        public static Action Throttle(int milliseconds, Action action)
+        public static Action Throttle(int milliseconds, bool waitForStable, Action action)
         {
             Timer timer = null;
 
             return () =>
             {
                 if (timer != null)
-                    return;
+                {
+                    if (!waitForStable)
+                        return;
+                    timer.Stop();
+                    timer.Dispose();
+                }
 
                 timer = new Timer { Interval = milliseconds };
                 timer.Tick += (sender, args) =>
@@ -26,6 +31,11 @@ namespace Eventless.WinForms
                 };
                 timer.Start();
             };
+        }
+
+        public static T Throttle<T>(this ICanThrottle<T> computed, int milliseconds, bool waitForStable = true)
+        {
+            return computed.SetThrottler(a => Throttle(milliseconds, waitForStable, a));
         }
 
         public static void BindChanged<T>(IGetable<T> getable, Action changed)
@@ -206,7 +216,7 @@ namespace Eventless.WinForms
                 _panel.Controls.Clear();
                 RebindItems(_panel, _to, 0, factory);
 
-                var throttledResize = Throttle(100, () =>
+                var throttledResize = Throttle(100, true, () =>
                 {
                     foreach (var control in _panel.Controls.OfType<Control>())
                         control.Width = _panel.ClientSize.Width;
@@ -265,7 +275,7 @@ namespace Eventless.WinForms
                         list.Clear();
                 });
 
-            var throttledResize = Throttle(100, () =>
+            var throttledResize = Throttle(100, true, () =>
             {
                 if (panel.Controls.Count != 0)
                     panel.Controls[0].Height = panel.ClientSize.Height;

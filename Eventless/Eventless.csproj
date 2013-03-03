@@ -39,8 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsyncComputed.cs" />
     <Compile Include="Binding.cs" />
     <Compile Include="IBindsTo.cs" />
+    <Compile Include="ICanThrottle.cs" />
     <Compile Include="ISetableList.cs" />
     <Compile Include="ListenerStack.cs" />
     <Compile Include="RecursiveModificationException.cs" />
