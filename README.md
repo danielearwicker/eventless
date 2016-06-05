@@ -2,3 +2,27 @@ eventless
 =========
 
 Inspired by the knockout.js pattern(s), in C#, blogging as I go at http://smellegantcode.wordpress.com/2013/02/25/eventless-programming-part-1-why-the-heck/
+
+*Update* 2016-06-05 - I've kept the original WinForms code in a branch called `winforms`.
+The master branch is now modified to target WPF. The major differences are:
+
+The `INotifyPropertyChanged` interface is inherited by `IGetable<T>`, and it replaces
+the removed non-generic `IGetable`. It always specifies `Value` as the name string in
+the `PropertyChanged` event. This means that any getable is automatically ready for WPF
+two-way binding, e.g.:
+
+    <TextBox Text="{Binding NewNoteText.Value, Mode=TwoWay}"/>
+
+Note that you have to bind to the `Value` property.
+
+Similarly, `SetableList` is now replaced with a much simpler `GetableList` that simply
+acts as a wrapper around `ObservableCollection`, and integrates it with the automatic
+dependency-tracking of `Computed`.
+
+The `Computed` feature is changed to work like `ko.pureComputed`, which makes it much
+better at automatically cleaning up: when the last listener on its `PropertyChanged`
+event delists, it delists from `PropertyChanged` on all its own dependencies. You can
+still force this cleanup to occur by calling `Dispose`.
+
+I've also removed a few things for now, until I figure out a tidy way to do them,
+such as `AsyncComputed`.
