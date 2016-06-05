@@ -11,7 +11,7 @@ namespace Eventless.Tests
         public void TestSimpleUnchanged()
         {
             var w = Setable.From(0);
-            w.PropertyChanged += (s, e) => { throw new Exception("Shouldn't fire Changed event if value is unchanged"); };
+            w.Changed += () => { throw new Exception("Shouldn't fire Changed event if value is unchanged"); };
             w.Value = 0;
         }
 
@@ -20,7 +20,7 @@ namespace Eventless.Tests
         {
             var w = Setable.From(0);
             var changed = false;
-            w.PropertyChanged += (s, e) => changed = true;
+            w.Changed += () => changed = true;
             w.Value = 1;
             Assert.IsTrue(changed);
         }
@@ -31,7 +31,7 @@ namespace Eventless.Tests
             // Default comparison uses equals method
             var changed = false;
             var w = Setable.From(new[] { 5, 20, 13 });
-            w.PropertyChanged += (s, e) => changed = true;
+            w.Changed += () => changed = true;
 
             w.Value = new[] { 5, 20, 13 }; // even though contents are same, still counts as changed
             Assert.IsTrue(changed);
@@ -55,7 +55,7 @@ namespace Eventless.Tests
             var w = Setable.From(0);
 
             // Okay to assign to writeable that just changed as long as it's the same (new) value
-            w.PropertyChanged += (s, e) => w.Value = 1;
+            w.Changed += () => w.Value = 1;
             w.Value++;
         }
 
@@ -66,7 +66,7 @@ namespace Eventless.Tests
             var w = Setable.From(0);
 
             // Not okay to set it to a different value (hence expected exception)
-            w.PropertyChanged += (s, e) => w.Value++;
+            w.Changed += () => w.Value++;;
             w.Value++;
         }
     }

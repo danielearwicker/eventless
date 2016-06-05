@@ -1,10 +1,14 @@
 ﻿using System;
-using System.ComponentModel;
 
 namespace Eventless
 {
-    public interface IGetable<out T> : INotifyPropertyChanged
+    public interface IGetable<out T> : IGetable
     {
         T Value { get; }
-    }    
+    }
+
+    public interface IGetable
+    {
+        event Action Changed;
+    }
 }

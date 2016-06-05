@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NoteTaker.Models")]
+[assembly: AssemblyTitle("Eventless.WinForms")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("NoteTaker.Models")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyProduct("Eventless.WinForms")]
+[assembly: AssemblyCopyright("Copyright © Microsoft 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("6abcf2ec-b587-436a-a5d0-49aa25dbe7f6")]
+[assembly: Guid("9b9f0a72-4e10-4a3b-a45d-76da32c13093")]
 
 // Version information for an assembly consists of the following four values:
 //

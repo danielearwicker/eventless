@@ -2,20 +2,26 @@
 
 namespace Eventless
 {
-    public sealed class SetableComputed<T> : Computed<T>, ISetable<T>
+    public sealed class SetableComputed<T> : Forwarder<Computed<T>, T>, ISetable<T>, ICanThrottle<SetableComputed<T>>
     {
         private readonly Action<T> _set;
 
         public SetableComputed(Func<T> get, Action<T> set)
-            : base(get)
+            : base(new Computed<T>(get))
         {
             _set = set;
         }
 
-        public new T Value
+        public T Value
         {
-            get { return base.Value; }
+            get { return Impl.Value; }
             set { _set(value); }
+        }
+
+        public SetableComputed<T> SetThrottler(Func<Action, Action> throttler)
+        {
+            Impl.SetThrottler(throttler);
+            return this;
         }
     }
 }

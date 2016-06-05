@@ -1,8 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Eventless
 {
-    public static class ListExtensions
+    public interface ISetableList<T> : IGetable<IList<T>>, IList<T>
+    {
+        event Action<int> Added;
+        event Action<int> Updated;
+        event Action<int> Removed;
+        event Action Cleared;
+    }
+
+    public static class SetableListExtensions
     {
         public static void RemoveAll<T>(this IList<T> list, IEnumerable<T> remove)
         {
