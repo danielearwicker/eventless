@@ -10,8 +10,8 @@ namespace Eventless.Tests
         [TestMethod]
         public void TestNotification()
         {
-            var x = Setable.From(1);
-            var y = Setable.From(2);
+            var x = Mutable.From(1);
+            var y = Mutable.From(2);
             var z = Computed.From(() => x.Value + y.Value);
 
             Assert.AreEqual(3, z.Value);

@@ -1,15 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventless", "Eventless\Eventless.csproj", "{A9F75373-2DB3-4D0C-A268-E272CBECF02C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventless.Tests", "Eventless.Tests\Eventless.Tests.csproj", "{B25A31E2-29EE-4BDB-8B11-4AD3E5B26B19}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteTakerWpf", "NoteTakerWpf\NoteTakerWpf.csproj", "{62AD4FD3-1617-45AE-B179-AA12ECF3B1F3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteTaker.Models", "NoteTaker.Models\NoteTaker.Models.csproj", "{6ABCF2EC-B587-436A-A5D0-49AA25DBE7F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +27,6 @@ Global
 		{62AD4FD3-1617-45AE-B179-AA12ECF3B1F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62AD4FD3-1617-45AE-B179-AA12ECF3B1F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62AD4FD3-1617-45AE-B179-AA12ECF3B1F3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6ABCF2EC-B587-436A-A5D0-49AA25DBE7F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6ABCF2EC-B587-436A-A5D0-49AA25DBE7F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6ABCF2EC-B587-436A-A5D0-49AA25DBE7F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6ABCF2EC-B587-436A-A5D0-49AA25DBE7F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

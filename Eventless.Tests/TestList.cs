@@ -9,7 +9,7 @@ namespace Eventless.Tests
         [TestMethod]
         public void TestSimple()
         {
-            var l = new GetableList<string>();
+            var l = new MutableList<string>();
 
             var notified = 0;
 
@@ -27,7 +27,7 @@ namespace Eventless.Tests
         [TestMethod]
         public void TestReentrance()
         {
-            var l = new GetableList<int>(new [] { 1, 2, 3, 4, 5, 6 });
+            var l = new MutableList<int>(new [] { 1, 2, 3, 4, 5, 6 });
 
             // Set it up so that if any item is changed, they all change to 10!
             l.PropertyChanged += (s, e) =>
@@ -46,7 +46,7 @@ namespace Eventless.Tests
         [ExpectedException(typeof(RecursiveModificationException))]
         public void TestRecursion()
         {
-            var l = new GetableList<int>(new[] { 1, 2, 3, 4, 5, 6 });
+            var l = new MutableList<int>(new[] { 1, 2, 3, 4, 5, 6 });
 
             // Same set up (any changes => all change to 10)
             l.PropertyChanged += (s, e) =>

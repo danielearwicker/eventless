@@ -1,8 +1,4 @@
-﻿using System.Windows;
-using Eventless;
-using NoteTaker.Models;
-
-namespace NoteTakerWpf
+﻿namespace NoteTakerWpf
 {    
     public partial class MainWindow
     {

@@ -6,7 +6,7 @@ using System.Windows.Threading;
 
 namespace Eventless
 {
-    public class Computed<T> : SetableImpl<T>, IGetable<T>, ICanThrottle<Computed<T>>, IDisposable
+    public class Computed<T> : MutableImpl<T>, IImmutable<T>, ICanThrottle<Computed<T>>, IDisposable
     {
         private readonly Func<T> _compute;
 
@@ -17,7 +17,7 @@ namespace Eventless
         private int _listenerCount;
 
         public Computed(Func<T> compute)
-            : base(new Setable<T>())
+            : base(new Mutable<T>())
         {
             _compute = compute;
             _throttledRecompute = Recompute;
@@ -147,9 +147,9 @@ namespace Eventless
             return new Computed<T>(compute);
         }
 
-        public static SetableComputed<T> From<T>(Func<T> get, Action<T> set)
+        public static MutableComputed<T> From<T>(Func<T> get, Action<T> set)
         {
-            return new SetableComputed<T>(get, set);
+            return new MutableComputed<T>(get, set);
         }
 
         public static T Throttle<T>(this ICanThrottle<T> computed, TimeSpan interval, bool waitForStable = true)

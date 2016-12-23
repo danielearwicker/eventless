@@ -69,6 +69,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Note.cs" />
+    <Compile Include="Notes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -99,10 +101,6 @@
     <ProjectReference Include="..\Eventless\Eventless.csproj">
       <Project>{A9F75373-2DB3-4D0C-A268-E272CBECF02C}</Project>
       <Name>Eventless</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NoteTaker.Models\NoteTaker.Models.csproj">
-      <Project>{6abcf2ec-b587-436a-a5d0-49aa25dbe7f6}</Project>
-      <Name>NoteTaker.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,6 +1,6 @@
 ﻿namespace Eventless
 {
-    public interface ISetable<T> : IGetable<T>
+    public interface IMutable<T> : IImmutable<T>
     {
         new T Value { get; set; }
     }

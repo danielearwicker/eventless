@@ -6,12 +6,12 @@ using System.ComponentModel;
 
 namespace Eventless
 {
-    public sealed class GetableList<T> : IGetable<ObservableCollection<T>>, IEquate<T>
+    public sealed class MutableList<T> : IImmutable<ObservableCollection<T>>, IEquate<T>
     {
         private readonly ObservableCollection<T> _list = new ObservableCollection<T>();
         private readonly HashSet<int> _updatingIndices = new HashSet<int>();
         
-        public GetableList(IEnumerable<T> init = null)
+        public MutableList(IEnumerable<T> init = null)
         {                       
             if (init != null)
                 _list.AddRange(init);
@@ -33,7 +33,7 @@ namespace Eventless
 
                         try
                         {
-                            PropertyChanged?.Invoke(this, Setable.EventArgs);
+                            PropertyChanged?.Invoke(this, Mutable.EventArgs);
                         }
                         finally
                         {
@@ -43,7 +43,7 @@ namespace Eventless
                     }
                 }
                 else
-                    PropertyChanged?.Invoke(this, Setable.EventArgs);
+                    PropertyChanged?.Invoke(this, Mutable.EventArgs);
             };
         }
 

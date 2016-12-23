@@ -5,12 +5,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Eventless.Tests
 {
     [TestClass]
-    public class TestSetable
+    public class TestMutable
     {
         [TestMethod]
         public void TestSimpleUnchanged()
         {
-            var w = Setable.From(0);
+            var w = Mutable.From(0);
             w.PropertyChanged += (s, e) => { throw new Exception("Shouldn't fire Changed event if value is unchanged"); };
             w.Value = 0;
         }
@@ -18,7 +18,7 @@ namespace Eventless.Tests
         [TestMethod]
         public void TestSimpleChanged()
         {
-            var w = Setable.From(0);
+            var w = Mutable.From(0);
             var changed = false;
             w.PropertyChanged += (s, e) => changed = true;
             w.Value = 1;
@@ -30,7 +30,7 @@ namespace Eventless.Tests
         {
             // Default comparison uses equals method
             var changed = false;
-            var w = Setable.From(new[] { 5, 20, 13 });
+            var w = Mutable.From(new[] { 5, 20, 13 });
             w.PropertyChanged += (s, e) => changed = true;
 
             w.Value = new[] { 5, 20, 13 }; // even though contents are same, still counts as changed
@@ -52,7 +52,7 @@ namespace Eventless.Tests
         [TestMethod]
         public void TestReentrance()
         {
-            var w = Setable.From(0);
+            var w = Mutable.From(0);
 
             // Okay to assign to writeable that just changed as long as it's the same (new) value
             w.PropertyChanged += (s, e) => w.Value = 1;
@@ -63,7 +63,7 @@ namespace Eventless.Tests
         [ExpectedException(typeof(RecursiveModificationException))]
         public void TestRecursion()
         {
-            var w = Setable.From(0);
+            var w = Mutable.From(0);
 
             // Not okay to set it to a different value (hence expected exception)
             w.PropertyChanged += (s, e) => w.Value++;

@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 namespace Eventless
 {
-    public class SetableImpl<T> : IEquate<T>, INotifyPropertyChanged 
+    public class MutableImpl<T> : IEquate<T>, INotifyPropertyChanged 
     {
         private T _value;
         private bool _changing;
 
-        protected SetableImpl(T value = default(T))
+        protected MutableImpl(T value = default(T))
         {
             _value = value;
         }
@@ -35,7 +35,7 @@ namespace Eventless
 
                 try
                 {
-                    PropertyChanged?.Invoke(this, Setable.EventArgs);
+                    PropertyChanged?.Invoke(this, Mutable.EventArgs);
                 }
                 finally
                 {
@@ -53,7 +53,7 @@ namespace Eventless
             return EqualityComparer<T>.Default.Equals(a, b);
         }
 
-        public static implicit operator T(SetableImpl<T> from)
+        public static implicit operator T(MutableImpl<T> from)
         {
             return from.ValueImpl;
         }

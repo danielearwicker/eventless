@@ -5,19 +5,19 @@ using System.Linq;
 using System.Windows.Input;
 using Eventless;
 
-namespace NoteTaker.Models
+namespace NoteTakerWpf
 {
     public class Notes
     {
-        public IGetable<ObservableCollection<Note>> AllNotes { get; } = new GetableList<Note>();
+        public IImmutable<ObservableCollection<Note>> AllNotes { get; } = new MutableList<Note>();
         
-        public IGetable<IEnumerable<Note>> SelectedNotes { get; }
+        public IImmutable<IEnumerable<Note>> SelectedNotes { get; }
 
-        public ISetable<bool?> SelectAllIsChecked { get; }
+        public IMutable<bool?> SelectAllIsChecked { get; }
 
-        public IGetable<bool> SelectAllIsEnabled { get; }
+        public IImmutable<bool> SelectAllIsEnabled { get; }
         
-        public ISetable<string> NewNoteText { get; } = new Setable<string>(string.Empty);
+        public IMutable<string> NewNoteText { get; } = Mutable.From(string.Empty);
 
         public ICommand AddNote { get; }
 
@@ -28,11 +28,11 @@ namespace NoteTaker.Models
             ).Throttle(TimeSpan.FromMilliseconds(10));
 
             SelectAllIsChecked = Computed.From(
-                get: () => !SelectedNotes.Value.Any()
-                               ? false
-                               : SelectedNotes.Value.Count() == AllNotes.Value.Count
-                                     ? true
-                                     : default(bool?),
+                get: () => 
+                    !SelectedNotes.Value.Any() ? false : 
+                    SelectedNotes.Value.Count() == AllNotes.Value.Count ? true : 
+                    default(bool?),
+
                 set: state =>
                 {
                     // only pay attention when setting to a definite state
@@ -45,7 +45,7 @@ namespace NoteTaker.Models
 
             SelectAllIsEnabled = Computed.From(() => AllNotes.Value.Count != 0);
 
-            AddNote = new GetableCommand(
+            AddNote = new Command(
                 execute: () =>
                 {
                     var text = NewNoteText.Value;

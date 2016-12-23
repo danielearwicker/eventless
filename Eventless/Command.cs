@@ -4,12 +4,12 @@ using System.Windows.Input;
 
 namespace Eventless
 {
-    public class GetableCommand : ICommand, IDisposable
+    public class Command : ICommand, IDisposable
     {
         private readonly Action _execute;
-        private readonly IGetable<bool> _canExecute;
+        private readonly IImmutable<bool> _canExecute;
 
-        public GetableCommand(Action execute, IGetable<bool> canExecute = null)
+        public Command(Action execute, IImmutable<bool> canExecute = null)
         {
             _execute = execute;
             if (canExecute != null)

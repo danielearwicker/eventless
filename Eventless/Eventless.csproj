@@ -11,6 +11,7 @@
     <AssemblyName>Eventless</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,33 +30,28 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GetableCommand.cs" />
+    <Compile Include="Command.cs" />
     <Compile Include="ICanThrottle.cs" />
-    <Compile Include="IGetableList.cs" />
     <Compile Include="ListExtensions.cs" />
     <Compile Include="ListenerStack.cs" />
     <Compile Include="RecursiveModificationException.cs" />
-    <Compile Include="SetableComputed.cs" />
+    <Compile Include="MutableComputed.cs" />
     <Compile Include="Computed.cs" />
-    <Compile Include="Forwarder.cs" />
     <Compile Include="IEquate.cs" />
-    <Compile Include="ISetable.cs" />
-    <Compile Include="IGetable.cs" />
-    <Compile Include="Setable.cs" />
-    <Compile Include="SetableImpl.cs" />
-    <Compile Include="GetableList.cs" />
+    <Compile Include="IMutable.cs" />
+    <Compile Include="IImmutable.cs" />
+    <Compile Include="Mutable.cs" />
+    <Compile Include="MutableImpl.cs" />
+    <Compile Include="MutableList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
