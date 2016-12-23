@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://opensource.org/licenses/MIT</projectUrl>    
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>First nuget-packaged version.</releaseNotes>
+    <copyright>Copyright 2013-2017 Daniel Earwicker</copyright>
+    <tags>XAML WPF FRP Functional Reactive</tags>
+  </metadata>
+</package>
