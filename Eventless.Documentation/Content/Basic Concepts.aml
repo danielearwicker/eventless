@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="37af68b9-3009-4484-87fe-c1af9466206a" revisionNumber="1">
+  <developerConceptualDocument
+    xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <!--
+    <summary>
+      <para>Optional summary abstract</para>
+    </summary>
+    -->
+
+    <introduction>
+      <autoOutline />
+
+      <para>Eventless is based on a very simple concept: to replace manual event subscription
+      with an automatic equivalent, called Functional Reactive Programming (FRP). The MVVM
+      pattern acheived this for views binding to data. Eventless extends this idea to allow
+      data to bind to other data, building up layers of data transformation. The approach
+      is often compared to how spreadsheets allow cells to be computed from other cells, and
+      their values update automatically so that changes "ripple" through the spreadsheet.</para>
+    </introduction>
+
+    <section address="Observables">
+      <title>Observables</title>
+      <content>
+        <para>A value that can notify other values when it changes is called an observable.</para>
+        <para>There are two main kinds: mutable values and computed values. A mutable value
+        is like a plain value cell in a spreadsheet. A computed value is like a spreadsheet
+        cell containing a formula.</para>
+        <para>Mutable means "able to be modified". Such values have a <codeInline>Value</codeInline>
+        property that can be set. Computed values are usually not setable.
+        </para>
+      </content>
+    </section>
+
+    <section address="MutableValues">
+      <title>Mutable Values</title>
+      <content>
+        <para>A mutable value is embodied by the <codeEntityReference>T:Eventless.Mutable`1</codeEntityReference>
+          class. For example, you can declare a mutable property in your view model class:
+        </para>
+        <code>
+          public IMutable&lt;string&gt; FirstName { get; } = Mutable.From("Homer");
+        </code>
+        <para>Note that the value type can be any type, including complex collections.</para>
+      </content>
+    </section>
+
+    <section address="ComputedValues">
+      <title>Computed Values</title>
+      <content>
+        <para>
+          A computed value is embodied by the <codeEntityReference>T:Eventless.Computed`1</codeEntityReference>
+          class. For example, you can declare a computed property in your view model class:
+        </para>
+        <code>
+          public class Person
+          {
+              public IMutable&lt;string&gt; FirstName { get; } = Mutable.From("Homer");
+              public IMutable&lt;string&gt; LastName { get; } = Mutable.From("Simpson");
+
+              public IImmutable&lt;string&gt; FullName { get; }
+
+              public Person()
+              {
+                  FullName = Computed.From(() =&gt; $"{FirstName.Value} {LastName.Value}");
+              }
+          }
+        </code>
+        <para>
+          Note that the definition has to be assigned in the constructor. If you try to set up the
+          computed in the <codeInline>FullName</codeInline> property declaration you will get a
+          compiler error.
+        </para>
+      </content>
+    </section>
+
+    <section address="BindingFromXAML">
+      <title>Binding From XAML</title>
+      <content>
+        <para>
+          You can use XAML binding expressions in the usual way to target the observable values
+          in your view model. The only thing you have to remember is to target the <codeInline>Value</codeInline>
+          property of each observable.
+        </para>
+        <code>
+          &lt;Label Grid.Row="0" Grid.Column="0"&gt;First name&lt;/Label&gt;
+          &lt;TextBox Grid.Row="0" Grid.Column="1" Text="{Binding FirstName.Value, UpdateSourceTrigger=PropertyChanged}"/&gt;
+
+          &lt;Label Grid.Row="1" Grid.Column="0"&gt;Last name&lt;/Label&gt;
+          &lt;TextBox Grid.Row="1" Grid.Column="1" Text="{Binding LastName.Value, UpdateSourceTrigger=PropertyChanged}"/&gt;
+
+          &lt;Label Grid.Row="2" Grid.Column="0"&gt;Full name&lt;/Label&gt;
+          &lt;Label Grid.Row="2" Grid.Column="1" Content="{Binding FullName.Value}"/&gt;
+        </code>
+        <para>
+          When the user edits either the <codeInline>First name</codeInline> or <codeInline>Last name</codeInline>
+          fields, they will see the displayed <codeInline>Full name</codeInline> change immediately, just like a
+          spreadsheet cell containing a formula.
+        </para>
+      </content>
+    </section>
+
+    <section address="Collections">
+      <title>Collections</title>
+      <content>
+        <para>
+          The <codeInline>ObservableCollection</codeInline> class in the BCL is capable
+          of raising events when it is modified, and XAML bindings already respond to these events
+          to update the UI.
+        </para>
+        <para>
+          To allow Eventless computed values to respond to those changes, there is a
+          wrapper class that ensures the necessary change events are properly raised:
+        </para>
+        <code>
+          public MutableList&lt;Note&gt; AllNotes { get; } = new MutableList&lt;Note&gt;();
+        </code>
+        <para>
+          The <codeEntityReference>T:Eventless.MutableList`1</codeEntityReference> class is just
+          like a <codeInline>Mutable</codeInline> in which the value type is an
+          <codeInline>ObservableCollection</codeInline>. But in addition it sets up event handling
+          so that it can report changes in its value whenever the collection is modified.
+        </para>
+      </content>
+    </section>
+    
+    <relatedTopics>
+      <!-- One or more of the following:
+           - A local link
+           - An external link
+           - A code entity reference
+
+      <link xlink:href="Other Topic's ID"/>
+      <link xlink:href="Other Topic's ID">Link inner text</link>
+
+      <externalLink>
+          <linkText>Link text</linkText>
+          <linkAlternateText>Optional alternate link text</linkAlternateText>
+          <linkUri>URI</linkUri>
+      </externalLink>
+
+      <codeEntityReference>API member ID</codeEntityReference>
+
+      Examples:
+
+      <link xlink:href="00e97994-e9e6-46e0-b420-5be86b2f8270" />
+      <link xlink:href="00e97994-e9e6-46e0-b420-5be86b2f8278">Some other topic</link>
+
+      <externalLink>
+          <linkText>SHFB on GitHub</linkText>
+          <linkAlternateText>Go to GitHub</linkAlternateText>
+          <linkUri>https://GitHub.com/EWSoftware/SHFB</linkUri>
+      </externalLink>
+
+      <codeEntityReference>T:TestDoc.TestClass</codeEntityReference>
+      <codeEntityReference>P:TestDoc.TestClass.SomeProperty</codeEntityReference>
+      <codeEntityReference>M:TestDoc.TestClass.#ctor</codeEntityReference>
+      <codeEntityReference>M:TestDoc.TestClass.#ctor(System.String,System.Int32)</codeEntityReference>
+      <codeEntityReference>M:TestDoc.TestClass.ToString</codeEntityReference>
+      <codeEntityReference>M:TestDoc.TestClass.FirstMethod</codeEntityReference>
+      <codeEntityReference>M:TestDoc.TestClass.SecondMethod(System.Int32,System.String)</codeEntityReference>
+      -->
+    </relatedTopics>
+  </developerConceptualDocument>
+</topic>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<topic id="ca2f21b1-fdbc-4b93-8fc1-051fdf574854" revisionNumber="1">
+	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+		<introduction>
+			<para>This is the API reference for the Eventless library. For further information
+      see <externalLink><linkText>the project homepage</linkText><linkUri>https://github.com/danielearwicker/eventless</linkUri></externalLink>.
+    </para>
+		</introduction>
+      
+		<relatedTopics>
+			<link xlink:href="10178b36-391a-4ba2-8807-ba2dec321778" />
+		</relatedTopics>
+	</developerConceptualDocument>
+</topic>

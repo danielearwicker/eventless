@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using Eventless;
@@ -9,7 +8,7 @@ namespace NoteTakerWpf
 {
     public class Notes
     {
-        public IImmutable<ObservableCollection<Note>> AllNotes { get; } = new MutableList<Note>();
+        public MutableList<Note> AllNotes { get; } = new MutableList<Note>();
         
         public IImmutable<IEnumerable<Note>> SelectedNotes { get; }
 
