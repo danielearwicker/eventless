@@ -79,6 +79,10 @@ This can then be used as the view model of a simple window (note that you have t
 </Window>
 ```
 
+# Compatibility
+
+At the moment `Eventless` is built for old-school WPF as a .NET 4.5 assembly. But I'm interested in seeing how it fits with Universal Windows Platform. Anyone with experience of that platform is encouraged to investigate and send me a pull request!
+
 # MIT License
 
 https://opensource.org/licenses/MIT
